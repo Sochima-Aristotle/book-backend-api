@@ -16,6 +16,8 @@ connectDB()
 
 const app = express()
 
+app.use(express.json())
+
 if(process.env.NODE_ENV= 'development'){
     app.use(morgan('dev'))
 }
@@ -26,3 +28,11 @@ const server = app.listen(
     PORT, 
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`.yellow.bold)
 )
+
+// handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise)=>{
+    console.log(`Error: ${err.message}`);
+
+    // Close server & exit process
+    server.close(() => process.exit(1))
+})

@@ -1,0 +1,18 @@
+[
+    {
+        "title": "7 habits of highly effective people",
+        "subtitle": "Great book for great people",
+        "author": "Stephen R. Covey",
+        "publisher": "Knight",
+        "publishedDate": 2018,
+        "purcheseDate": "2nd october 2022",
+        "decription": "a wonderful book for all who strive to succede",
+        "pageCount": 334,
+        "printType": "book",
+        "category": "Inspiring book",
+        "rating": "10",
+        "maturityRating": "Very mature and more bad",
+        "shelf": "Currently reading",
+        "isBorrowed": false
+    }
+]

@@ -1,16 +1,28 @@
 const path = require('path');
 // const slugify = require("slugify");
 // const ErrorResponse = require('../utils/errorResponse');
-const books = require('../models/Books');
+const Books = require('../models/Books');
 
 // @desc      Get all books details
 // @route     GET /api/books
 // @access    Public
 exports.getAllBooks = async (req, res, next) => {
+
+try {
+  const books = await Books.find()
+
   res.status(200).json({
-    status: 200,
-    data: 'getting all books'
-  });
+    success: true,
+    count: books.length,
+    data: books
+  })
+} catch (error) {
+  res.status(400).json({
+    success: false,
+
+  })
+}
+  
 };
 
 
@@ -18,10 +30,23 @@ exports.getAllBooks = async (req, res, next) => {
 // @route     GET /api/books/:id
 // @access    Public
 exports.getBook = async (req, res, next )=> {
-  res.status(200).json({
-    status: 200,
-    mgs: `got the book with the id ${req.params.id}`
-  });
+  try {
+    const books = await Books.findById(req.params.id)
+  if(!books){
+   return res.status(400).json({
+      success: false,
+    })
+  }
+    res.status(200).json({
+      success: true,
+      data: books
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+  
+    })
+  }
 };
 
 
@@ -30,10 +55,24 @@ exports.getBook = async (req, res, next )=> {
 // @route     POST /api/books
 // @access    Private
 exports.createBook = async (req, res, next) => {
-  res.status(200).json({
-    status: 201,
-    msg: 'created a book detail'
+
+  try {
+    const books  = await Books.create(req.body)
+  
+  console.log(books);
+  
+  res.status(201).json({
+    
+    data: books
   });
+    
+  } catch (error) {
+    req.status(400).json({
+      success: false
+    })    
+  }
+  
+  
 };
 
 
@@ -42,10 +81,27 @@ exports.createBook = async (req, res, next) => {
 // @route     PUT /api/books/:id
 // @access    Private
 exports.updateBook = async (req, res, next) => {
+  try {
+    const books = await Books.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runvalidator: true
+    })
+  
+    if(!books){
+      return res.status(400).json({
+         success: false,
+       })
+      }
     res.status(200).json({
-        status: 200,
-        mgs: `updated the book with the id ${req.params.id}`
-      });
+      success: true,
+      data: books
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+  
+    })
+  }
 };
 
 
@@ -54,8 +110,22 @@ exports.updateBook = async (req, res, next) => {
 // @route     DELETE /api/books/:id
 // @access    Private
 exports.deleteBook = async (req, res, next) => {
+  try {
+    const books = await Books.findByIdAndDelete(req.params.id)
+  
+    if(!books){
+      return res.status(400).json({
+         success: false,
+       })
+      }
     res.status(200).json({
-        status: 200,
-        mgs: `Deleted the book with the id of ${req.params.id}`
-      });
+      success: true,
+      data: {}
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+  
+    })
+  }
 };
