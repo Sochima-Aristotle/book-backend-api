@@ -1,8 +1,10 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const colors = require('colors')
+const errorHandler = require('./utils/errorResponse')
 const books = require('./routes/books')
 const morgan = require('morgan')
+const bookPhoto = require('express-fileupload')
 const connectDB = require('./config/db')
 
 
@@ -21,8 +23,10 @@ app.use(express.json())
 if(process.env.NODE_ENV= 'development'){
     app.use(morgan('dev'))
 }
+app.use(bookPhoto())
 
 app.use('/api/books', books)
+app.use(errorHandler)
 
 const server = app.listen(
     PORT, 

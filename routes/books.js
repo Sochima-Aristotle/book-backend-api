@@ -6,7 +6,8 @@ const {
     getBook,
     createBook,
     updateBook,
-    deleteBook
+    deleteBook,
+    uploadBookPhoto
 } = require('../controllers/books')
 
 router.
@@ -19,5 +20,7 @@ router
 .get(getBook)
 .put(updateBook)
 .delete(deleteBook)
+
+router.route('/:id/photo').put(uploadBookPhoto)
 
 module.exports = router; 
