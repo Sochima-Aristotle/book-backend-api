@@ -8,8 +8,6 @@ const bookPhoto = require('express-fileupload')
 const connectDB = require('./config/db')
 
 
-
-
 // loading the config var
 dotenv.config({path: './config/config.env'})
 connectDB()
