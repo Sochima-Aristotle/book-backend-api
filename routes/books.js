@@ -8,7 +8,7 @@ const {
     updateBook,
     deleteBook,
     uploadBookPhoto
-} = require('../controllers/boo')
+} = require('../controllers/books')
 
 router.
 route('/')
