@@ -17,12 +17,6 @@ exports.getAllBooks = asyncHandler(async(req, res, next) => {
     count: books.length,
     data: books
   })
-
-  res.status(400).json({
-    success: false,
-
-  })
-
 });
 
 
