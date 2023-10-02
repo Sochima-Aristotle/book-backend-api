@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const randomize = require('randomatic');
+// const randomize = require('randomatic');
 
 const UserSchema = new mongoose.Schema({
   name: {

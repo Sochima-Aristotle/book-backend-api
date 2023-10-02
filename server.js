@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const colors = require('colors')
 const errorHandler = require('./middleware/errorHandle')
 const books = require('./routes/books')
+const users = require('./routes/users')
 const morgan = require('morgan')
 const bookPhoto = require('express-fileupload')
 const connectDB = require('./config/db')
@@ -24,6 +25,7 @@ if(process.env.NODE_ENV= 'development'){
 app.use(bookPhoto())
 
 app.use('/api/books', books)
+app.use('/api/users', users)
 app.use(errorHandler)
 
 const server = app.listen(
