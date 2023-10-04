@@ -12,7 +12,7 @@ const users = await User.find()
 res.status(200).json({
     success: true,
     count: users.length,
-    data: books
+    data: users
   })
 });
 
@@ -36,11 +36,12 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/users
 // @access    Private/Admin
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const user = await User.create(req.body);
+  // const user = await User.create(req.body);
+  const users  = await User.create(req.body)
 
   res.status(201).json({
     success: true,
-    data: user
+    data: users
   });
 });
 
