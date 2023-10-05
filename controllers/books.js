@@ -10,7 +10,7 @@ const Books = require('../models/Books');
 exports.getAllBooks = asyncHandler(async(req, res, next) => {
 
 
-  const books = await Books.find()
+  const books = await Books.find(req.query)
 
   res.status(200).json({
     success: true,
