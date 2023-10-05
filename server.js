@@ -4,6 +4,7 @@ const colors = require('colors')
 const errorHandler = require('./middleware/errorHandle')
 const books = require('./routes/books')
 const users = require('./routes/users')
+const auth = require('./routes/auth')
 const morgan = require('morgan')
 const bookPhoto = require('express-fileupload')
 const connectDB = require('./config/db')
@@ -26,6 +27,7 @@ app.use(bookPhoto())
 
 app.use('/api/books', books)
 app.use('/api/users', users)
+app.use('/api/auth', auth)
 app.use(errorHandler)
 
 const server = app.listen(
