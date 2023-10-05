@@ -36,11 +36,11 @@ const bookSchema = new mongoose.Schema({
     default: 'no-photo.jpg'
   },
   language: [String, 'English'],
-  // user: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'User',
-  //   required: true
-  // },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
   shelf:{
     type: String,
     enum:['read', 'Currently reading', 'not read', 'none'],
