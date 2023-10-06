@@ -38,6 +38,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+
 // @desc      Login user
 // @route     POST /api/v1/auth/login
 // @access    Public
