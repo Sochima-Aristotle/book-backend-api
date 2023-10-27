@@ -11,16 +11,16 @@ const connectDB = require('./config/db')
 
 
 // loading the config var
-dotenv.config({path: './config/config.env'})
+dotenv.config({ path: './config/config.env' })
 connectDB()
 
- const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 8000
 
 const app = express()
 
 app.use(express.json())
 
-if(process.env.NODE_ENV= 'development'){
+if (process.env.NODE_ENV = 'development') {
     app.use(morgan('dev'))
 }
 app.use(bookPhoto())
@@ -31,12 +31,12 @@ app.use('/api/auth', auth)
 app.use(errorHandler)
 
 const server = app.listen(
-    PORT, 
+    PORT,
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`.yellow.bold)
 )
 
 // handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise)=>{
+process.on('unhandledRejection', (err, promise) => {
     console.log(`Error: ${err.message}`);
 
     // Close server & exit process

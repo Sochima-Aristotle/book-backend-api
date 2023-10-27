@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/asyncHandler');
-// const sendEmail = require('../utils/sendEmail');
+const sendEmail = require('../utils/sendEmail');
 const User = require('../models/Users');
 
 // @desc      Register user
@@ -16,7 +16,9 @@ exports.register = asyncHandler(async (req, res, next) => {
     email,
     password,
   });
- 
+
+  // Create token
+  const token = user.getSignedJwtToken();
   // grab token and send to email
   const confirmEmailToken = user.generateEmailConfirmToken();
 
@@ -54,7 +56,7 @@ exports.login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email }).select('+password');
 
   if (!user) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse('Invalid credentials, please register or input valid credentials', 401));
   }
 
   // Check if password matches
