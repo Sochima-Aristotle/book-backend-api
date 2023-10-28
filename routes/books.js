@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const { protect } = require('../middleware/auth');
+
 
 const {
     getAllBooks,
@@ -11,16 +13,42 @@ const {
 } = require('../controllers/books')
 
 router.
-route('/')
-.get(getAllBooks)
-.post(createBook)
+    route('/')
+    .get(protect, getAllBooks)
+    .post(protect, createBook)
 
 router
-.route('/:id')
-.get(getBook)
-.put(updateBook)
-.delete(deleteBook)
+    .route('/:id')
+    .get(protect, getBook)
+    .put(protect, updateBook)
+    .delete(protect, deleteBook)
 
-router.route('/:id/photo').put(uploadBookPhoto)
+router.route('/:id/photo').put(protect, uploadBookPhoto)
 
-module.exports = router; 
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+// router
+//     .route('/:id/photo')
+//     .put(protect, authorize('publisher', 'admin'), bootcampPhotoUpload);
+
+// router
+//     .route('/')
+//     .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
+//     .post(protect, authorize('publisher', 'admin'), createBootcamp);
+
+// router
+//     .route('/:id')
+//     .get(getBootcamp)
+//     .put(protect, authorize('publisher', 'admin'), updateBootcamp)
+//     .delete(protect, authorize('publisher', 'admin'), deleteBootcamp);
+
+// module.exports = router;

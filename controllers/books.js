@@ -3,12 +3,33 @@ const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require("../middleware/asyncHandler")
 const Books = require('../models/Books');
+const users = require('../models/Users');
 
 // @desc      Get all books details
 // @route     GET /api/books
 // @access    Public
 exports.getAllBooks = asyncHandler(async (req, res, next) => {
 
+  // const { email, password } = req.body;
+
+  // // Validate emil & password
+  // if (!email || !password) {
+  //   return next(new ErrorResponse('Please provide an email and password', 400));
+  // }
+
+  // // Check for user
+  // const user = await User.findOne({ email }).select('+password');
+
+  // if (!user) {
+  //   return next(new ErrorResponse('Invalid credentials, please register or input valid credentials', 401));
+  // }
+
+  // // Check if password matches
+  // const isMatch = await user.matchPassword(password);
+
+  // if (!isMatch) {
+  //   return next(new ErrorResponse('Invalid credentials', 401));
+  // }
 
   const books = await Books.find(req.query)
 
