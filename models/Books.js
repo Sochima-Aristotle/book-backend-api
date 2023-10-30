@@ -1,33 +1,33 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-  title:{
+  title: {
     type: String,
-     require: [true, 'Please add a book title'],
-     unique: true
-    },
-    slug: String,
-  subtitle:{
-    type: String,
-    require:true
-   },
-  author: {
-    type: String, 
-    require:true
-   },
-  publisher: String,
-  publishedDate:{
-    type: Number,
-   
+    require: [true, 'Please add a book title'],
+    unique: true
   },
-  
- purcheseDate:{
-  type: String,
-  
- },
- description: String,
- pageCount: Number,
- printType: String,
+  slug: String,
+  subtitle: {
+    type: String,
+    require: true
+  },
+  author: {
+    type: String,
+    require: true
+  },
+  publisher: String,
+  publishedDate: {
+    type: Number,
+
+  },
+
+  purcheseDate: {
+    type: String,
+
+  },
+  description: String,
+  pageCount: Number,
+  printType: String,
   category: String,
   rating: Number,
   maturityRating: String,
@@ -39,21 +39,21 @@ const bookSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: true
+    // required: true
   },
-  shelf:{
+  shelf: {
     type: String,
-    enum:['read', 'Currently reading', 'not read', 'none'],
+    enum: ['read', 'Currently reading', 'not read', 'none'],
     require: true,
     default: 'none'
   },
-  isBorrowed:{
+  isBorrowed: {
     type: Boolean,
     default: false,
     require: true
   },
   borrowedBy: String,
-  retureDAte:{
+  retureDAte: {
     type: Date,
     msg: 'Given on trust and for knowledge seek',
     default: Date.now()
