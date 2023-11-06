@@ -10,7 +10,7 @@ const setupTransport = {
     pass: process.env.SMTP_PASSWORD,
   },
 }
-console.log('tran', setupTransport)
+
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport(setupTransport);
 

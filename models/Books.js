@@ -35,11 +35,11 @@ const bookSchema = new mongoose.Schema({
     type: String,
     default: 'no-photo.jpg'
   },
-  language: [String, 'English'],
+  language: String,
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    // required: true
+    required: true
   },
   shelf: {
     type: String,
@@ -53,10 +53,10 @@ const bookSchema = new mongoose.Schema({
     require: true
   },
   borrowedBy: String,
-  retureDAte: {
+  retureDate: {
     type: Date,
     msg: 'Given on trust and for knowledge seek',
-    default: Date.now()
+    default: "null"
   }
 
 });

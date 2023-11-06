@@ -10,27 +10,6 @@ const users = require('../models/Users');
 // @access    Public
 exports.getAllBooks = asyncHandler(async (req, res, next) => {
 
-  // const { email, password } = req.body;
-
-  // // Validate emil & password
-  // if (!email || !password) {
-  //   return next(new ErrorResponse('Please provide an email and password', 400));
-  // }
-
-  // // Check for user
-  // const user = await User.findOne({ email }).select('+password');
-
-  // if (!user) {
-  //   return next(new ErrorResponse('Invalid credentials, please register or input valid credentials', 401));
-  // }
-
-  // // Check if password matches
-  // const isMatch = await user.matchPassword(password);
-
-  // if (!isMatch) {
-  //   return next(new ErrorResponse('Invalid credentials', 401));
-  // }
-
   const books = await Books.find(req.query)
 
   res.status(200).json({
@@ -67,7 +46,10 @@ exports.getBook = asyncHandler(async (req, res, next) => {
 // @route     POST /api/books
 // @access    Private
 exports.createBook = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id
 
+  // check for publishedBooks
+  const publishedBooks = await Books.findOne({ user: req.user.id })
 
   const books = await Books.create(req.body)
 
@@ -87,19 +69,21 @@ exports.createBook = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.updateBook = asyncHandler(async (req, res, next) => {
 
-  let books = await Books.findById(req.params.id);
+  let books = await Books.findById(req.params.id)
+
+  console.log("first:", books.user)
 
   if (!books) {
     return next(
-      new ErrorResponse(`Book not found with id of ${req.params.id}`, 404)
-    );
+      new ErrorResponse(`cannot get any book with the id of ${req.params.id}`, 404)
+    )
   }
 
-  // Make sure user is bootcamp owner
+  // Make sure user is the book owner
   if (books.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
-        `User ${req.user.id} is not authorized to update this bootcamp`,
+        `User ${req.user.id} is not authorized to update this book`,
         401
       )
     );
@@ -141,6 +125,16 @@ exports.deleteBook = asyncHandler(async (req, res, next) => {
       success: false,
     })
   }
+
+  if (books.user.toString() !== req.user.id) {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete this book`,
+        401
+      )
+    );
+  }
+
   res.status(200).json({
     success: true,
     data: {}
