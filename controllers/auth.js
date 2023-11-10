@@ -31,7 +31,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 
   user.save({ validateBeforeSave: false });
 
-  const sendResult = await sendEmail({
+   await sendEmail({
     email: user.email,
     subject: 'Email confirmation token',
     message,
