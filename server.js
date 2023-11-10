@@ -28,7 +28,7 @@ if (process.env.NODE_ENV = 'development') {
 app.use(bookPhoto())
 
 app.use('/api/books', books)
-app.use('/api/users', users)
+app.use('/api/user', users)
 app.use('/api/auth', auth)
 app.use(errorHandler)
 
