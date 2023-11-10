@@ -2,19 +2,15 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    getUsers,
-
-    getUser,
-    createUser,
+   createUser,
     updateUser,
     deleteUser,
-    register,
   login,
   logout,
   getMe,
   forgotPassword,
   resetPassword,
-//   updateDetails,
+
   updatePassword,
   confirmEmail,
 }= require('../controllers/users')
