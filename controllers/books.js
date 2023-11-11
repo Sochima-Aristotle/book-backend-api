@@ -10,10 +10,9 @@ const users = require('../models/Users');
 // @access    Public
 exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
   // Check if the user is logged in
+  console.log('user:', req.user);
   if (!req.user) {
-    return next(
-      new ErrorResponse(`User not authorized. Please log in.`, 401)
-    );
+    return next(new ErrorResponse('User not authorized. Please log in.', 401));
   }
 
   // Assuming that `req.user.id` is set during authentication
@@ -24,13 +23,15 @@ exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
 
   // Check if the user has any books
   if (!userBooks || userBooks.length === 0) {
-    return next(
-      new ErrorResponse(`User ${userId} does not have any books.`, 404)
-    );
+    return res.status(200).json({
+      success: true,
+      msg: 'User has no books, please create books.'
+    });
   }
 
   res.status(200).json({
     success: true,
+    count: userBooks.length,
     data: userBooks,
   });
 });
@@ -80,6 +81,13 @@ exports.createBook = asyncHandler(async (req, res, next) => {
 
   // check for publishedBooks
   const publishedBooks = await Books.findOne({ user: req.user.id })
+
+  // Adjust the property based on your user object structure
+  const shelfOwner = req.user.name; 
+
+  // Update the request body with the Shelf_Owner value
+  req.body.Shelf_Owner = shelfOwner;
+
 
   const books = await Books.create(req.body)
 

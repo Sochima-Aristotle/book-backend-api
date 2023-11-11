@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
+  Shelf_Owner:{
+    type: String,
+    require: true
+  },
   title: {
     type: String,
     require: [true, 'Please add a book title'],
-    unique: true
   },
   slug: String,
   subtitle: {
@@ -15,7 +18,6 @@ const bookSchema = new mongoose.Schema({
     type: String,
     require: true
   },
-  publisher: String,
   publishedDate: {
     type: String
 

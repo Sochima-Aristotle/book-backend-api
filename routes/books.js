@@ -14,7 +14,7 @@ const {
 
 router.
     route('/')
-    .get(getAllUserBooks)
+    .get(protect, getAllUserBooks)
     .post(protect, createBook)
 
 router
