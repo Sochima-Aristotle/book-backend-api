@@ -20,7 +20,7 @@ router.
 router
     .route('/:id')
     .get(getBook)
-    .put(updateBook)
+    .put(protect, updateBook)
     .delete(deleteBook)
 
 router.route('/:id/photo').put(uploadBookPhoto)
