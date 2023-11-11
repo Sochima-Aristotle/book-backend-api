@@ -9,8 +9,8 @@ const users = require('../models/Users');
 // @route     GET /api/books
 // @access    Public
 exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
+  
   // Check if the user is logged in
-  console.log('user:', req.user);
   if (!req.user) {
     return next(new ErrorResponse('User not authorized. Please log in.', 401));
   }
