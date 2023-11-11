@@ -8,37 +8,66 @@ const users = require('../models/Users');
 // @desc      Get all books details
 // @route     GET /api/books
 // @access    Public
-exports.getAllBooks = asyncHandler(async (req, res, next) => {
+exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
+  // Check if the user is logged in
+  if (!req.user) {
+    return next(
+      new ErrorResponse(`User not authorized. Please log in.`, 401)
+    );
+  }
 
-  const books = await Books.find(req.query)
+  // Assuming that `req.user.id` is set during authentication
+  const userId = req.user.id;
+
+  // Retrieve all books associated with the logged-in user
+  const userBooks = await Books.find({ user: userId });
+
+  // Check if the user has any books
+  if (!userBooks || userBooks.length === 0) {
+    return next(
+      new ErrorResponse(`User ${userId} does not have any books.`, 404)
+    );
+  }
 
   res.status(200).json({
     success: true,
-    count: books.length,
-    data: books
-  })
+    data: userBooks,
+  });
 });
+
 
 
 // @desc      Get single book details
 // @route     GET /api/books/:id
 // @access    Public
 exports.getBook = asyncHandler(async (req, res, next) => {
+  // Assuming that `req.user.id` is set during authentication
+  const userId = req.user.id;
 
-  const books = await Books.findById(req.params.id)
+  const book = await Books.findById(req.params.id);
 
-  if (!books) {
+  if (!book) {
     return next(
-      new ErrorResponse(`cannot get a book with the id of id ${req.params.id}`)
-    )
+      new ErrorResponse(`Book not found with the id ${req.params.id}`, 404)
+    );
+  }
+
+  // Make sure user is the book owner
+  if (book.user.toString() !== userId) {
+    return next(
+      new ErrorResponse(
+        `User ${userId} is not authorized to access this book`,
+        401
+      )
+    );
   }
 
   res.status(200).json({
     success: true,
-    data: books
-  })
+    data: book,
+  });
+});
 
-})
 
 
 
@@ -46,6 +75,7 @@ exports.getBook = asyncHandler(async (req, res, next) => {
 // @route     POST /api/books
 // @access    Private
 exports.createBook = asyncHandler(async (req, res, next) => {
+  console.log("id:", req.user);
   req.body.user = req.user.id
 
   // check for publishedBooks

@@ -4,7 +4,7 @@ const { protect } = require('../middleware/auth');
 
 
 const {
-    getAllBooks,
+    getAllUserBooks,
     getBook,
     createBook,
     updateBook,
@@ -14,16 +14,16 @@ const {
 
 router.
     route('/')
-    .get(protect, getAllBooks)
+    .get(getAllUserBooks)
     .post(protect, createBook)
 
 router
     .route('/:id')
-    .get(protect, getBook)
-    .put(protect, updateBook)
-    .delete(protect, deleteBook)
+    .get(getBook)
+    .put(updateBook)
+    .delete(deleteBook)
 
-router.route('/:id/photo').put(protect, uploadBookPhoto)
+router.route('/:id/photo').put(uploadBookPhoto)
 
 
 

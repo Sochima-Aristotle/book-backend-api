@@ -17,7 +17,7 @@ const bookSchema = new mongoose.Schema({
   },
   publisher: String,
   publishedDate: {
-    type: Number,
+    type: String
 
   },
 
@@ -54,7 +54,7 @@ const bookSchema = new mongoose.Schema({
   },
   borrowedBy: String,
   retureDate: {
-    type: Date,
+    type: String,
     msg: 'Given on trust and for knowledge seek',
     default: "null"
   }

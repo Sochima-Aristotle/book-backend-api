@@ -50,6 +50,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // Validate emil & password
   if (!email || !password) {
+    console.log('the email',email);
+    console.log('the password',password);
     return next(new ErrorResponse('Please provide an email and password', 400));
   }
 
@@ -71,12 +73,26 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Log user out / clear cookie
-// @route     GET /api/auth/logout
+// @route     GET /api/auth/logout/:id
 // @access    Public
 exports.logout = asyncHandler(async (req, res, next) => {
+  // Check if the user is authenticated
+  if (!req.user) {
+    return next(new ErrorResponse(`User not authorized.`, 401));
+  }
+
+  // Check if the user ID in the request parameter matches the authenticated user's ID
+  const userIdToLogout = req.params.id;
+  if (userIdToLogout !== req.user.id) {
+    return next(new ErrorResponse(`Unauthorized to log out user with ID ${userIdToLogout}.`, 403));
+  }
+
+  // Clear the authentication token in the cookie
   res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 10 * 1000), // Set an expiration time (10 seconds in this example)
     httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https', // Use secure cookie if served over HTTPS
+    sameSite: 'Lax', // Adjust the SameSite attribute as needed
   });
 
   res.status(200).json({
@@ -84,6 +100,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
     data: {},
   });
 });
+
 
 // @desc      Get current logged in user
 // @route     GET /api/v1/auth/me

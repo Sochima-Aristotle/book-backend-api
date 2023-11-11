@@ -30,7 +30,7 @@ router.route('/:id')
 
 router.route('/register').post(createUser);
 router.route('/login').post(login);
-router.route('/logout',).get(logout);
+router.route('/logout').post(logout);
 router.route('/me').get(getMe);
 router.route('/confirmemail').get(confirmEmail);
 // router.route('/updatedetails').put(updateDetails);
