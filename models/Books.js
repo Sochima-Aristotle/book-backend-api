@@ -33,7 +33,7 @@ const bookSchema = new mongoose.Schema({
   category: String,
   rating: Number,
   maturityRating: String,
-  photo: {
+  imgUrl: {
     type: String,
     default: 'no-photo.jpg'
   },
