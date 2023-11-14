@@ -19,9 +19,9 @@ router.
 
 router
     .route('/:id')
-    .get(getBook)
+    .get(protect, getBook)
     .put(protect, updateBook)
-    .delete(deleteBook)
+    .delete(protect, deleteBook)
 
 router.route('/:id/photo').put(uploadBookPhoto)
 

@@ -25,7 +25,7 @@ exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
   if (!userBooks || userBooks.length === 0) {
     return res.status(200).json({
       success: true,
-      msg: 'User has no books, please create books.'
+      data: []
     });
   }
 
