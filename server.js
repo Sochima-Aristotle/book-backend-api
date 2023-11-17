@@ -24,7 +24,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Enable CORS 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 
 if (process.env.NODE_ENV = 'development') {
     app.use(morgan('dev'))
