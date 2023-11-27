@@ -2,18 +2,17 @@ const express = require('express')
 const router = express.Router()
 
 const {
-   createUser,
-    updateUser,
-    deleteUser,
+  createUser,
+  updateUser,
+  deleteUser,
   login,
   logout,
   getMe,
   forgotPassword,
   resetPassword,
-
   updatePassword,
   confirmEmail,
-}= require('../controllers/users')
+} = require('../controllers/users')
 
 
 
@@ -23,9 +22,9 @@ router.route('/')
 
 
 router.route('/:id')
-// .get(getUser)
-.put(updateUser)
-.delete(deleteUser)
+  // .get(getUser)
+  .put(updateUser)
+  .delete(deleteUser)
 
 
 router.route('/register').post(createUser);
