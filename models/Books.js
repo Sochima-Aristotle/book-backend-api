@@ -47,7 +47,7 @@ const bookSchema = new mongoose.Schema({
     type: String,
     enum: ['read', 'Currently reading', 'not read', 'none'],
     require: true,
-    default: 'none'
+    // default: 'none'
   },
   isBorrowed: {
     type: Boolean,
