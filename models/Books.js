@@ -45,7 +45,7 @@ const bookSchema = new mongoose.Schema({
   },
   shelf: {
     type: String,
-    enum: ['read', 'Currently reading', 'not read', 'none'],
+    enum: ['read', 'currently reading', 'not read', 'none'],
     required: [true, 'Please book state'],
     // default: 'none'
   },
