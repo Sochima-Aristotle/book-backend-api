@@ -46,7 +46,7 @@ const bookSchema = new mongoose.Schema({
   shelf: {
     type: String,
     enum: ['read', 'Currently reading', 'not read', 'none'],
-    require: true,
+    required: [true, 'Please add an email'],
     // default: 'none'
   },
   isBorrowed: {
