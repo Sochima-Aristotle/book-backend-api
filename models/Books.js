@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-  Shelf_Owner:{
+  Shelf_Owner: {
     type: String,
     require: true
   },
@@ -16,7 +16,8 @@ const bookSchema = new mongoose.Schema({
   },
   author: {
     type: String,
-    require: true
+    require: [true, 'Please add book author'],
+
   },
   publishedDate: {
     type: String
@@ -35,7 +36,7 @@ const bookSchema = new mongoose.Schema({
   maturityRating: String,
   imgUrl: {
     type: String,
-    default: 'no-photo.jpg'
+    // default: 'no-photo.jpg'
   },
   language: String,
   user: {
