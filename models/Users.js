@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
       'Please add a valid email',
     ],
   },
- 
+
   password: {
     type: String,
     required: [true, 'Please add a password'],
@@ -58,9 +58,11 @@ UserSchema.pre("findOneAndUpdate", async function (next) {
 
 // Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
+
+  return token;
 };
 
 // Match user entered password to hashed password in database

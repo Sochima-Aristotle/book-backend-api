@@ -32,7 +32,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 
   user.save({ validateBeforeSave: false });
 
-   await sendEmail({
+  await sendEmail({
     email: user.email,
     subject: 'Email confirmation token',
     message,
@@ -50,8 +50,8 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // Validate emil & password
   if (!email || !password) {
-    console.log('the email',email);
-    console.log('the password',password);
+    console.log('the email', email);
+    console.log('the password', password);
     return next(new ErrorResponse('Please provide an email and password', 400));
   }
 
