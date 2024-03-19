@@ -1,18 +1,17 @@
-const path = require('path');
+const path = require("path");
 // const slugify = require("slugify");
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require("../middleware/asyncHandler")
-const Books = require('../models/Books');
-const users = require('../models/Users');
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/asyncHandler");
+const Books = require("../models/Books");
+const users = require("../models/Users");
 
 // @desc      Get all books details
 // @route     GET /api/books
 // @access    Public
 exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
-  
   // Check if the user is logged in
   if (!req.user) {
-    return next(new ErrorResponse('User not authorized. Please log in.', 401));
+    return next(new ErrorResponse("User not authorized. Please log in.", 401));
   }
 
   // Assuming that `req.user.id` is set during authentication
@@ -25,7 +24,7 @@ exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
   if (!userBooks || userBooks.length === 0) {
     return res.status(200).json({
       success: true,
-      data: []
+      data: [],
     });
   }
 
@@ -35,8 +34,6 @@ exports.getAllUserBooks = asyncHandler(async (req, res, next) => {
     data: userBooks,
   });
 });
-
-
 
 // @desc      Get single book details
 // @route     GET /api/books/:id
@@ -69,52 +66,45 @@ exports.getBook = asyncHandler(async (req, res, next) => {
   });
 });
 
-
-
-
 // @desc      create book details
 // @route     POST /api/books
 // @access    Private
 exports.createBook = asyncHandler(async (req, res, next) => {
   console.log("id:", req.user);
-  req.body.user = req.user.id
+  req.body.user = req.user.id;
 
   // check for publishedBooks
-  const publishedBooks = await Books.findOne({ user: req.user.id })
+  const publishedBooks = await Books.findOne({ user: req.user.id });
 
   // Adjust the property based on your user object structure
-  const shelfOwner = req.user.name; 
+  const shelfOwner = req.user.name;
 
   // Update the request body with the Shelf_Owner value
   req.body.Shelf_Owner = shelfOwner;
 
-
-  const books = await Books.create(req.body)
-
+  const books = await Books.create(req.body);
 
   res.status(201).json({
     success: true,
-    data: books
+    data: books,
   });
-
-
 });
-
-
 
 // @desc      Update book details
 // @route     PUT /api/books/:id
 // @access    Private
 exports.updateBook = asyncHandler(async (req, res, next) => {
+  let books = await Books.findById(req.params.id);
 
-  let books = await Books.findById(req.params.id)
-
-  console.log("first:", books.user)
+  console.log("first:", books.user);
 
   if (!books) {
     return next(
-      new ErrorResponse(`cannot get any book with the id of ${req.params.id}`, 404)
-    )
+      new ErrorResponse(
+        `cannot get any book with the id of ${req.params.id}`,
+        404
+      )
+    );
   }
 
   // Make sure user is the book owner
@@ -134,34 +124,33 @@ exports.updateBook = asyncHandler(async (req, res, next) => {
 
   books = await Books.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
-    runvalidator: true
-  })
+    runvalidator: true,
+  });
 
   if (!books) {
     return next(
-      new ErrorResponse(`cannot get any book with the id of ${req.params.id}`, 404)
-    )
+      new ErrorResponse(
+        `cannot get any book with the id of ${req.params.id}`,
+        404
+      )
+    );
   }
   res.status(200).json({
     success: true,
-    data: books
-  })
-
+    data: books,
+  });
 });
-
-
 
 // @desc      Get all bootcamps
 // @route     DELETE /api/books/:id
 // @access    Private
 exports.deleteBook = asyncHandler(async (req, res, next) => {
-
-  const books = await Books.findByIdAndDelete(req.params.id)
+  const books = await Books.findByIdAndDelete(req.params.id);
 
   if (!books) {
     return res.status(400).json({
       success: false,
-    })
+    });
   }
 
   if (books.user.toString() !== req.user.id) {
@@ -175,33 +164,26 @@ exports.deleteBook = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: {}
-  })
-
-
+    data: {},
+  });
 });
 
-// @desc      Updload book photo 
+// @desc      Updload book photo
 // @route     PUT /api/books/:id/photo
 // @access    Private
 exports.uploadBookPhoto = asyncHandler(async (req, res, next) => {
-
-  const books = await Books.findById(req.params.id)
+  const books = await Books.findById(req.params.id);
 
   if (!books) {
     return next(
-      new ErrorResponse(`cannot get any book with the id of ${req.params.id}`, 404)
-    )
+      new ErrorResponse(
+        `cannot get any book with the id of ${req.params.id}`,
+        404
+      )
+    );
   }
-
 
   if (!req.files) {
-    return next(new ErrorResponse(`Please add a file`, 400))
+    return next(new ErrorResponse(`Please add a file`, 400));
   }
-
 });
-
-
-
-
-
